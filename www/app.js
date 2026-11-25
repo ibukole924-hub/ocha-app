@@ -15,7 +15,7 @@ const todos=s=>tx(s,"readonly",o=>o.getAll());
 const uno=(s,id)=>tx(s,"readonly",o=>o.get(+id));
 const guardar=(s,x)=>tx(s,"readwrite",o=>o.put(x));
 const borrar=(s,id)=>tx(s,"readwrite",o=>o.delete(+id));
-const TABS=[["catedra","📖 Cátedra"],["dilogun","🐚 Dilogún"],["cantos","🎵 Cantos"],["buscar","🔎 Buscar"]];
+const TABS=[["catedra","📖 Cátedra"],["dilogun","🐚 Dilogún"],["cantos","🎵 Cantos"],["buscar","🔎 Buscar"],["fuentes","🔗 Fuentes"]];
 const V={};
 function ir(v,x,y){
  const a=v=="leer"?"catedra":v;
@@ -105,3 +105,14 @@ async function bus(){
  for(const c of await todos("cantos")){if(hit(c.titulo+" "+c.letra+" "+c.pron)!==null)R.push(`<div class="card" onclick="ir('cantos')"><b>${esc(c.titulo)}</b> <small>[canto]</small></div>`);}
  $("#r").innerHTML=R.join("")||"<p>Sin resultados.</p>";}
 abrir().then(()=>ir("catedra"));
+V.fuentes=()=>{
+ const L=[
+  ["Los negros brujos (F. Ortiz, 1906)","comparativa","https://beta-omk.manioc.org/files/original/11372/IHE14012.pdf"],
+  ["El estudio del arte negro en F. Ortiz","academica","https://biblioteca.org.ar/libros/89120.pdf"],
+  ["Menstruación en la Regla Ocha-Ifá","academica","https://dialnet.unirioja.es/descarga/articulo/7920219.pdf"],
+  ["Los espacios de los orishas y Ifá","academica","https://dialnet.unirioja.es/descarga/articulo/5149858.pdf"],
+  ["Prácticas religiosas habaneras","academica","https://www.redalyc.org/pdf/139/13901706.pdf"],
+  ["Santería o Regla de Ocha: sincretismo","academica","https://revistas.ucm.es/index.php/ILUR/en/article/view/ILUR0000120079A"]
+ ];
+ $("#v").innerHTML=`<h2>Fuentes</h2><p><small>Descarga el archivo y luego impórtalo en Cátedra.</small></p>`+
+ L.map(([t,f,u])=>`<div class="card"><b>${esc(t)}</b> <small>[${f}]</small><br><a href="${u}" target="_blank" rel="noopener"><button>Abrir / descargar</button></a></div>`).join("");};
